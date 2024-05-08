@@ -1,0 +1,46 @@
+.idea
+*/.idea
+*/**/.idea
+chat_server/*/__pycache__
+
+
+#files
+.~lock.teh_zad.docx#
+teh_zad.docx
+
+# client
+# dependencies
+chat_client/node_modules
+chat_client/build
+chat_client/.pnp
+chat_client/.pnp.js
+chat_client/.yarn/install-state.gz
+
+# testing
+chat_client/coverage
+
+# next.js
+chat_client/.next
+chat_client/out/
+
+# misc
+chat_client/.DS_Store
+chat_client/*.pem
+
+# debug
+chat_client/npm-debug.log*
+chat_client/yarn-debug.log*
+chat_client/yarn-error.log*
+
+# vercel
+chat_client/.vercel
+
+# typescript
+chat_client/*.tsbuildinfo
+
+
+# server
+chat_server/*/migrations
+chat_server/poetry.lock
+chat_server/db.sqlite3
+chat_server/.env
