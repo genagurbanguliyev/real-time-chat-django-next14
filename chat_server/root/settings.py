@@ -6,12 +6,8 @@ from dotenv import load_dotenv
 import os
 
 load_dotenv()
-# import environ
-# env = environ.Env()
-# environ.Env.read_env()
 
 # Your secret key
-# SECRET_KEY = env("SECRET_KEY")
 SECRET_KEY = os.environ.get('SECRET_KEY')
 
 # SECURITY WARNING: don't run with debug turned on in production!
@@ -19,7 +15,9 @@ DEBUG = True
 APPEND_SLASH = False
 
 CORS_ALLOW_ALL_ORIGINS = True
+CORS_ALLOW_CREDENTIALS = True
 ALLOWED_HOSTS = ["*"]
+CORS_ALLOW_HEADERS = ["*"]
 
 # Application definition
 INSTALLED_APPS = [
@@ -35,13 +33,6 @@ INSTALLED_APPS = [
     'rest_framework',
     'channels',
     'corsheaders',
-
-    # 'rest_framework.authtoken',
-    # 'dj_rest_auth',
-    # 'allauth',
-    # 'allauth.account',
-    # 'allauth.socialaccount',
-    # 'dj_rest_auth.registration',
 
     # local
     'chatapp'
@@ -146,7 +137,7 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 CACHES = {
     "default": {
         "BACKEND": "django_redis.cache.RedisCache",
-        "LOCATION": "redis://127.0.0.1:6378",
+        "LOCATION": "redis://127.0.0.1:6378/1",
         "OPTIONS": {
             "CLIENT_CLASS": "django_redis.client.DefaultClient"
         }
@@ -163,12 +154,81 @@ CHANNEL_LAYERS = {
 }
 
 # REST_FRAMEWORK = {
-#     'DEFAULT_PERMISSION_CLASSES': [
-#         'rest_framework.permissions.IsAuthenticated',
-#         ],
-#     'DEFAULT_AUTHENTICATION_CLASSES': [
-#         # 'rest_framework.authentication.BasicAuthentication',
-#         # 'rest_framework.authentication.SessionAuthentication',
-#         'rest_framework.authentication.TokenAuthentication'
-#     ]
+#     'DEFAULT_RENDERER_CLASSES': [
+#         'rest_framework.renderers.JSONRenderer',
+#     ],
 # }
+
+
+LOGGING = {
+    "version": 1,
+    "disable_existing_loggers": False,
+
+    # Filters:
+    "filters": {
+        "info_only": {
+            "()":  "logger.logger_filters.InfoOnlyFilter"
+        },
+        "exclude_django_log": {
+            "()":  "logger.logger_filters.ExcludeDjangoLogsFilter"
+        }
+    },
+
+    # Formatters' profiles:
+    "formatters": {
+        "base": {
+            "format": "[{asctime}][{levelname}][{name} / {funcName}][{lineno}] {message}",
+            "datefmt": "%d/%m/%Y %H:%M:%S",
+            "style": "{"
+        },
+        "info": {
+            "format": "[{asctime}][{name} / {funcName}] {message}",
+            "datefmt": "%d/%m/%Y %H:%M:%S",
+            "style": "{"
+        },
+        "django_sys_format": {
+            "format": "[{asctime}][{levelname} | {name}] {message}",
+            "datefmt": "%d/%m/%Y %H:%M:%S",
+            "style": "{"
+        }
+    },
+
+    # handlers:
+    "handlers": {
+        "important_file": {
+            "level": "WARNING",
+            "class": "logging.FileHandler",
+            "formatter": "base",
+            "filename": BASE_DIR / "logger/logs/important.log"
+        },
+        "info_file": {
+            "level": "INFO",
+            "class": "logging.FileHandler",
+            "formatter": "info",
+            "filters": ["info_only"],
+            "filename": BASE_DIR / "logger/logs/events_info.log",
+        },
+
+        "django_file": {
+            "level": "INFO",
+            "class": "logging.FileHandler",
+            "formatter": "django_sys_format",
+            "filename": BASE_DIR / "logger/logs/django_sys.log"
+        }
+    },
+
+
+    # loggers:
+    "loggers": {
+        "django": {
+            "handlers": ["django_file"],
+            "level": "INFO",
+        },
+
+        "root": {
+            "handlers": ["important_file", "info_file"],
+            "level": "INFO",
+            "filters": ["exclude_django_log"],
+        },
+    }
+}

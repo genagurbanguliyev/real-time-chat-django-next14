@@ -5,20 +5,19 @@ import {getSession} from "@/lib/actions";
 import {MessageType, SessionType, UserInfoType} from "@/common.types";
 
 import {redirect} from "next/navigation";
-import {getMessages} from "@/app/server/api";
+import {getMessages} from "@/server/api";
 const ChatRoom = dynamic(() => import('@/components/ChatRoom'), { ssr: false })
 
 export default async function Page() {
     const session: SessionType = await getSession()
-    if(!session || !session?.user?.id) { redirect("/login")}
+    if(!session || !session?.user?.id) { redirect("/login"); return; }
     const userInfo: UserInfoType = session?.user
-    const res = await getMessages()
-    let recentMessages: MessageType[]
+    const res = await getMessages(userInfo)
+    let recentMessages: MessageType[] = []
     if (res.ok) {
       recentMessages = await res.json()
     } else {
       console.log("ERR = ",res);
-      recentMessages = []
     }
 
   return (

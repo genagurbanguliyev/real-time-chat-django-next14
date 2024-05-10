@@ -1,6 +1,7 @@
 'use client'
 
 import {MessageType, UserInfoType} from "@/common.types";
+import {decryptText} from "@/helper/encDecText";
 
 interface IMessage {
   message: MessageType,
@@ -25,7 +26,7 @@ const Message: React.FC<IMessage>= ({ message, userInfo }) => {
         } `}
       >
         {message.user.name !== userInfo.name && <p className="font-bold">{message.user.name !== "" ? message.user.name : message?.id}:</p> }
-        <p>{message?.text}</p>
+        <p>{decryptText(message?.text)}</p>
         {message?.created_at && <p className="font-thin">{String(new Date(message.created_at).toLocaleString())}</p>}
       </div>
     </div>

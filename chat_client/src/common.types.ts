@@ -11,10 +11,10 @@ export type UserInfoType = {
 }
 
 export type MessageType = {
-    id?: string,
+    id: number,
     user: UserInfoType,
     text: string,
-    created_at?: Date,
+    created_at: Date,
 }
 
 export type SendMessageType = {

@@ -3,7 +3,6 @@
 */**/.idea
 chat_server/*/__pycache__
 
-
 #files
 .~lock.teh_zad.docx#
 teh_zad.docx
@@ -40,6 +39,12 @@ chat_client/*.tsbuildinfo
 
 
 # server
+# redis usages:
+chat_server/redisio
+
+# Log files
+chat_server/logger/logs/*
+
 chat_server/*/migrations
 chat_server/poetry.lock
 chat_server/db.sqlite3
