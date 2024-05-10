@@ -43,7 +43,9 @@ chat_client/*.tsbuildinfo
 chat_server/redisio
 
 # Log files
-chat_server/logger/logs/*
+chat_server/logger/logs/django_sys.log
+chat_server/logger/logs/events_info.log
+chat_server/logger/logs/important.log
 
 chat_server/*/migrations
 chat_server/poetry.lock
