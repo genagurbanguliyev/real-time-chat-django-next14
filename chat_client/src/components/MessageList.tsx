@@ -18,7 +18,7 @@ const MessageList: React.FC<IMessageList> = ({recentMessages, realtimeMessages, 
               <Message key={index} message={node} userInfo={userInfo} />
         ))
       }{
-        realtimeMessages.map((node: MessageType, index: number) => (
+        realtimeMessages?.length &&  realtimeMessages.map((node: MessageType, index: number) => (
               <Message key={index} message={node} userInfo={userInfo} />
         ))
       }
