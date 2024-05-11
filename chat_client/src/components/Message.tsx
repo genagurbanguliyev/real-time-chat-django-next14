@@ -13,14 +13,14 @@ const Message: React.FC<IMessage>= ({ message, userInfo }) => {
   return (
     <div
       className={`flex relative space-x-1 ${
-        message.user.name === userInfo.name
+        message.user.id === userInfo.id
           ? 'flex-row-reverse space-x-reverse'
           : 'flex-row'
       }`}
     >
       <div
         className={`rounded space-x-2 items-start p-3 text-white ${
-          message.user.name === userInfo.name
+          message.user.id === userInfo.id
             ? 'bg-[#4a9c6d]'
             : 'bg-[#363739]'
         } `}

@@ -33,7 +33,6 @@ class ChatConsumer(AsyncWebsocketConsumer):
         logger.info(f"Connect new user to conversation with user_id: {user_id}")
 
     async def disconnect(self, user_id):
-        # Remove user from room members cache (optional)
         # await cache.delete(f'user_{user_id}')
         await self.channel_layer.group_discard(
             self.room_group_name,
@@ -51,12 +50,11 @@ class ChatConsumer(AsyncWebsocketConsumer):
             # parse the json data into dictionary object
             text_data_json = json.loads(text_data)
 
-            # unpack the dictionary into the necessary parts
             message = text_data_json["data"]["text"]
             user = self.scope["user"]
 
             new_msg = await self.save_message(text=message, date_now=date_now)
-            # Send message to room group
+            # Send message to group
             await self.channel_layer.group_send(
                 self.room_group_name,
                     {

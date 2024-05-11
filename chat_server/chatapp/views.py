@@ -90,15 +90,13 @@ class MessagesLongPollingViewSet(APIView):
             return Response(serializer.data)
 
         # If there are no new messages, wait for a specified timeout
-        # This is a simplified example. In a production environment, you might want to use a more efficient waiting mechanism
         import time
         time.sleep(timeout)
 
         # Check again for new messages after the timeout
         if last_message_id:
             messages = Message.objects.filter(id__gt=last_message_id)
-        # else:
-        #     messages = []
+
 
         if messages.exists():
             serializer = MessageSerializer(messages, many=True)
@@ -113,7 +111,6 @@ class MessagesLongPollingViewSet(APIView):
         user_id = request.headers.get('User')
         data = request.data
         date_now = timezone.now()
-        print("LongPulling Post Data: ", data)
         logger.info(f"LongPulling Post Data: {data}")
         try:
             logger.info("Saving message")
@@ -127,31 +124,6 @@ class MessagesLongPollingViewSet(APIView):
         except Exception as err:
             error_message = "An internal server error occurred: " + str(err)
             print("Save Message ERROR with str: ", error_message)
-            print("Save Message ERROR without: ", err)
+            logger.error("Save Message ERROR without: ", err)
             return HttpResponseServerError(error_message)
-
-# class ExampleViewSet(APIView):
-#     def get_object(self, pk):
-#         try:
-#             return Message.objects.get(pk=pk)
-#         except Message.DoesNotExist:
-#             raise Http404
-#
-#     def get(self, request, pk, format=None):
-#         msg = self.get_object(pk)
-#         serializer = MessageSerializer(msg)
-#         return Response(serializer.data)
-#
-#     def put(self, request, pk, format=None):
-#         msg = self.get_object(pk)
-#         serializer = MessageSerializer(msg, data=request.data)
-#         if serializer.is_valid():
-#             serializer.save()
-#             return Response(serializer.data)
-#         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
-#
-#     def delete(self, request, pk, format=None):
-#         msg = self.get_object(pk)
-#         msg.delete()
-#         return Response(status=status.HTTP_204_NO_CONTENT)
 

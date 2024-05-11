@@ -6,8 +6,6 @@ export async function getMessages(userInfo: UserInfoType) {
         method: 'GET',
         headers: {
           "Content-Type": "application/json",
-            // "Access-Control-Allow-Origin": "*",
-            // "Access-Control-Allow-Headers": "*",
             'User': userInfo.id
         }
   })

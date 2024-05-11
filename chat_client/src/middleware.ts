@@ -1,12 +1,4 @@
 
-// import { NextRequest } from "next/server";
-// import { updateSession } from "@/lib/actions";
-//
-// export async function middleware(request: NextRequest) {
-//   console.log("req======= ",request)
-//   return await updateSession(request);
-// }
-
 import { NextRequest, NextResponse } from 'next/server'
 import {getSession} from '@/lib/actions'
 
@@ -28,10 +20,6 @@ export default async function middleware(req: NextRequest) {
   return NextResponse.next()
 }
 
-// export const config = {
-//   matcher: '/',
-// }
-// Routes Middleware should not run on
 export const config = {
   matcher: ['/((?!api|_next/static|_next/image|.*\\.png$).*)'],
 }

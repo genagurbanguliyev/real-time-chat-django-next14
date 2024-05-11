@@ -6,7 +6,6 @@ class UserSerializer(serializers.ModelSerializer):
     class Meta:
         model = User
         fields = ['id', 'name']
-        # read_only_fields = ['id', 'name']
 
 
 class MessageSerializer(serializers.ModelSerializer):
@@ -14,4 +13,3 @@ class MessageSerializer(serializers.ModelSerializer):
     class Meta:
         model = Message
         fields = ['id', 'user', 'text', 'created_at']
-        # read_only_fields = ['created', 'updated', 'id']

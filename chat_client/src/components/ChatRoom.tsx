@@ -76,8 +76,7 @@ const ChatRoom: React.FC<IChatRoom> = ({ userInfo, recentMessages }) => {
         console.log('sendMessage')
         // readyState == 0 ? setUsingWebSockets(false) : setUsingWebSockets(true)
         const sendText: string | null = encryptText(txt)
-        console.log('------------', readyState)
-        console.log('======================', usingWebSockets)
+        console.log("===========", usingWebSockets)
         if(sendText) {
             if (usingWebSockets) {
                 sendJsonMessage({

@@ -22,11 +22,3 @@ function generateMockMessages(length: number = 30): MessageType[] {
 }
 
 export const mockMessages = generateMockMessages();
-
-// messages: MessageSchema: [
-//     {
-//         id: '1',
-//         username: 'gena',
-//         text: 'hello',
-//     }
-// ]
